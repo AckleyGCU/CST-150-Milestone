@@ -1,0 +1,3 @@
+﻿Book1,Action,12,10,250,0
+Book2,Adventure,5,15,300,1
+Book3,Romance-Comedy,25,10,200,2
