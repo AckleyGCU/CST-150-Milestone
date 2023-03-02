@@ -73,7 +73,7 @@ namespace Milestone_Project
                     searchCombo.Visible = true;
                     searchTxt.Visible = false;
                 }
-                 else if (searchBy.SelectedIndex == 5)
+                 else if (searchBy.SelectedIndex == 1)
                 {
                     searchCombo.Visible = false;
                     searchTxt.Visible = true;
