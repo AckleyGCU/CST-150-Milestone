@@ -1,0 +1,11 @@
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\bin\Debug\Milestone Project.exe.config
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\bin\Debug\Milestone Project.exe
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\bin\Debug\Milestone Project.pdb
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone Project.csproj.AssemblyReference.cache
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone Project.csproj.SuggestedBindingRedirects.cache
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone_Project.Properties.Resources.resources
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone Project.csproj.GenerateResource.cache
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone Project.csproj.CoreCompileInputs.cache
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone Project.exe
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone Project.pdb
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone_Project.BookStore.resources
