@@ -52,10 +52,35 @@ namespace Milestone_Project
         }
 
         //Search for specific items that match search params
+        //Takes in the current inventory to search against
+        //Takes in bool which indicates to check for instock items
+        public Array search(Array inventoryItems, bool inStock)
+        {
+            //Initializes ArrayList for the return results
+            ArrayList results = new ArrayList();
+
+            //Goes through each item of the existing inventory
+            foreach (inventoryStruct item in inventoryItems)
+            {
+                //Conditional checks if it needs to look for instock items only
+                //if instock is true and the quantity is > 0 it will add it to the results ArrayList
+                if (inStock && item.quantity > 0)
+                {
+                    results.Add(item);
+                }
+                else if (!inStock && item.quantity >= 0)
+                {
+                    results.Add(item);
+                }
+            }
+            return results.ToArray();
+        }
+
         //Takes in the search type either Title or Genere
         //Takes in the current inventory to search against
         //Takes in the user entered/selected search param
-        public ArrayList search(String searchType, ArrayList inventoryItems, String searchParam)
+        //Takes in bool which indicates to check for instock items
+        public Array search(String searchType, Array inventoryItems, String searchParam, bool inStock)
         {
             //Initializes ArrayList for the return results
             ArrayList results = new ArrayList();
@@ -67,14 +92,29 @@ namespace Milestone_Project
                 //If the user entered/selected param matches text it will add it to the results ArrayList
                 if (searchType.Equals("Title") && item.title.ToLower().Contains(searchParam.ToLower()))
                 {
-                    results.Add(item);
+                    if (inStock && item.quantity > 0)
+                    {
+                        results.Add(item);
+                    }
+                    else if (!inStock && item.quantity >= 0)
+                    {
+                        results.Add(item);
+                    }
                 }
                 else if (searchType.Equals("Genere") && Array.Find(item.genere, element => element.Contains(searchParam)) != null)
                 {
-                    results.Add(item);
+                    if (inStock && item.quantity > 0)
+                    {
+                        results.Add(item);
+                    }
+                    else if (!inStock && item.quantity >= 0)
+                    {
+                        results.Add(item);
+                    }
                 }
             }
-            return results;
+            return results.ToArray();
         }
+
     }
 }
