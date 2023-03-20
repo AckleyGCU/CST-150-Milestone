@@ -18,7 +18,7 @@ namespace Milestone_Project
             public int price;
             public int pageCount;
             public int productID;
-            public string[] genere;
+            public string[] genre;
             public string title;
         }
 
@@ -38,7 +38,7 @@ namespace Milestone_Project
                 //Uses the array to define the struct and then add said struct to the Arraylist
                 inventoryStruct book = new inventoryStruct();
                 book.title = rows[0];
-                book.genere = rows[1].Split('-');
+                book.genre = rows[1].Split('-');
                 book.quantity = int.Parse(rows[2]);
                 book.price = int.Parse(rows[3]);
                 book.pageCount = int.Parse(rows[4]);
@@ -54,7 +54,7 @@ namespace Milestone_Project
         //Search for specific items that match search params
         //Takes in the current inventory to search against
         //Takes in bool which indicates to check for instock items
-        public Array search(Array inventoryItems, bool inStock)
+        public ArrayList search(ArrayList inventoryItems, bool inStock)
         {
             //Initializes ArrayList for the return results
             ArrayList results = new ArrayList();
@@ -73,14 +73,14 @@ namespace Milestone_Project
                     results.Add(item);
                 }
             }
-            return results.ToArray();
+            return results;
         }
 
-        //Takes in the search type either Title or Genere
+        //Takes in the search type either Title or Genre
         //Takes in the current inventory to search against
         //Takes in the user entered/selected search param
         //Takes in bool which indicates to check for instock items
-        public Array search(String searchType, Array inventoryItems, String searchParam, bool inStock)
+        public ArrayList search(String searchType, ArrayList inventoryItems, String searchParam, bool inStock)
         {
             //Initializes ArrayList for the return results
             ArrayList results = new ArrayList();
@@ -88,7 +88,7 @@ namespace Milestone_Project
             //Goes through each item of the existing inventory
             foreach(inventoryStruct item in inventoryItems)
             {
-                //Conditional checks if it needs to compare against either the Title or Genere
+                //Conditional checks if it needs to compare against either the Title or Genre
                 //If the user entered/selected param matches text it will add it to the results ArrayList
                 if (searchType.Equals("Title") && item.title.ToLower().Contains(searchParam.ToLower()))
                 {
@@ -101,7 +101,7 @@ namespace Milestone_Project
                         results.Add(item);
                     }
                 }
-                else if (searchType.Equals("Genere") && Array.Find(item.genere, element => element.Contains(searchParam)) != null)
+                else if (searchType.Equals("Genre") && Array.Find(item.genre, element => element.Contains(searchParam)) != null)
                 {
                     if (inStock && item.quantity > 0)
                     {
@@ -113,7 +113,7 @@ namespace Milestone_Project
                     }
                 }
             }
-            return results.ToArray();
+            return results;
         }
 
     }

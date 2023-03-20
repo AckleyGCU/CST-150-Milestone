@@ -9,3 +9,5 @@ C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Pro
 C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone Project.exe
 C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone Project.pdb
 C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone_Project.BookStore.resources
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone_Project.updateInventory.resources
+C:\Users\ackle\OneDrive\Desktop\GCU\CST-150 Code\Milestone Project\Milestone Project\obj\Debug\Milestone_Project.restock.resources

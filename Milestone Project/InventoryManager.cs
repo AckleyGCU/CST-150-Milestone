@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace Milestone_Project
 {
-    internal class InventoryManager
+    public class InventoryManager
     {
         //Initializes the array that will act as the master inventory
         //This Inventory array will store all new changes and edits made to inventory
         ArrayList inventoryItems = new ArrayList();
 
         //Takes the initial array list that is made from the txt file and converts it to an Array
-        public void initializeArray(Array inventory) { 
+        public void initializeArray(ArrayList inventory) { 
+            inventoryItems.Clear();
             inventoryItems.AddRange(inventory);
         }
 

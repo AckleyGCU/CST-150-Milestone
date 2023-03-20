@@ -16,20 +16,20 @@ namespace Milestone_Project
     {
         //Declares the inventory class and inventoryItems Array to be within the scope of the entire bookstore class
         Inventory inventory = new Inventory();
-        InventoryManager inventoryManager = new InventoryManager();
-        object[] inventoryItems;
+        public InventoryManager inventoryManager = new InventoryManager();
+        public ArrayList inventoryItems;
+
         public BookStore()
         {
             InitializeComponent();
             //populates inventoryItems with the starting inventory items and displays them
-            inventoryItems = inventory.populateInventory().ToArray();
+            inventoryItems = inventory.populateInventory();
             inventoryManager.initializeArray(inventoryItems);
             showInventory(inventoryItems);
-            
         }
 
         //Method is used for displaying inventory results
-        private void showInventory(Array books)
+        public void showInventory(ArrayList books)
         {
             //clears existing items
             resultsLst.Items.Clear();
@@ -37,7 +37,7 @@ namespace Milestone_Project
             foreach (Inventory.inventoryStruct item in books)
             {
                 ListViewItem lvItem = new ListViewItem(item.title);
-                lvItem.SubItems.Add(string.Join(", ", item.genere));
+                lvItem.SubItems.Add(string.Join(", ", item.genre));
                 lvItem.SubItems.Add(item.quantity.ToString());
                 lvItem.SubItems.Add(item.price.ToString());
                 lvItem.SubItems.Add(item.pageCount.ToString());
@@ -46,25 +46,8 @@ namespace Milestone_Project
             }
         }
         
-        //Takes in a bool to either show or hide the field neccessary to add or edit an inventory item
-        private void showAddEdit(bool visible)
-        {
-            titleLbl.Visible = visible;
-            genereLbl.Visible = visible;
-            priceLbl.Visible = visible;
-            quantityLbl.Visible = visible;
-            pageCountlbl.Visible = visible;
-            addTitle.Visible = visible;
-            genereBox.Visible = visible;
-            addPrice.Visible = visible;
-            addQuantity.Visible = visible;
-            addPageCount.Visible = visible;
-            cancelBtn.Visible = visible;
-            confirmBtn.Visible = visible;
-            resultsLst.Visible = !visible;
-        }
 
-        //If searchBy is Title it will show the text box if it is Genere it will show a combo box
+        //If searchBy is Title it will show the text box if it is genre it will show a combo box
         private void searchBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(searchBy.SelectedIndex != -1)
@@ -82,37 +65,23 @@ namespace Milestone_Project
             }
         }
 
-        //Display the fields needed to add an inventory item
+        //Displays form needed to add an inventory item
         private void addBtn_Click(object sender, EventArgs e)
         {
-            showAddEdit(true);
-            confirmBtn.Text = "Add Book";
-            resultsLst.Visible = false;
+            UpdateInventory updateInventory = new UpdateInventory(this, "Add Book");
+            updateInventory.Show();
         }
         
-        //Hides the fields needed to add an inventory item
-        private void cancelBtn_Click(object sender, EventArgs e)
-        {
-            showAddEdit(false);
-            resultsLst.Visible = true;
-            addBtn.Enabled = true;
-            
-            //Resets input fields
-            addTitle.Text = "";
-            addQuantity.Text = "";
-            addPrice.Text = "";
-            addPageCount.Text = "";
-        }
 
-        //Calls on methods from the inventory class to search contents based off of title or genere
+        //Calls on methods from the inventory class to search contents based off of title or genre
         private void searchBtn_Click(object sender, EventArgs e)
         {
-            //Conditional checks if Title or Genere was selected.
+            //Conditional checks if Title or genre was selected.
             if (searchBy.SelectedIndex >= 0 && searchBy.SelectedItem.Equals("Title"))
             {
                 showInventory(inventory.search(searchBy.Text, inventoryItems, searchTxt.Text, outOfStockChk.Checked));
             }
-            else if(searchBy.SelectedIndex >= 0 && searchBy.SelectedItem.Equals("Genere"))
+            else if(searchBy.SelectedIndex >= 0 && searchBy.SelectedItem.Equals("Genre"))
             {
                showInventory(inventory.search(searchBy.Text, inventoryItems, searchCombo.Text, outOfStockChk.Checked));
             }
@@ -124,87 +93,45 @@ namespace Milestone_Project
 
         private void resultsLst_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Enables the ability to click add or remove when a title is selected
+            //Enables the ability to click add, remove, restock when a title is selected
             editBtn.Enabled = true;
             removeBtn.Enabled = true;
+            restockBtn.Enabled = true;
         }
 
+        //Displays form to update inventory.
         private void editBtn_Click(object sender, EventArgs e)
         {
-            //Enables and disables buttons to direct user interaction.
+            string[] editArr = {resultsLst.SelectedItems[0].SubItems[0].Text,
+                resultsLst.SelectedItems[0].SubItems[2].Text, resultsLst.SelectedItems[0].SubItems[3].Text, resultsLst.SelectedItems[0].SubItems[3].Text};
+            UpdateInventory updateInventory = new UpdateInventory(this, "Edit Book", editArr);
+
+            updateInventory.Show();
+
+            //Disables buttons that rely on an item to be selected.
             editBtn.Enabled = false;
             removeBtn.Enabled = false;
-            addBtn.Enabled = false;
-            resultsLst.Visible = false;
-            confirmBtn.Enabled = true;
-            confirmBtn.Text = "Edit Book";
-
-            //Fills in input fields with the selected titles information
-            addTitle.Text = resultsLst.SelectedItems[0].SubItems[0].Text;
-            addQuantity.Text = resultsLst.SelectedItems[0].SubItems[2].Text;
-            addPrice.Text = resultsLst.SelectedItems[0].SubItems[3].Text;
-            addPageCount.Text = resultsLst.SelectedItems[0].SubItems[4].Text;
-
-            showAddEdit(true);
+            restockBtn.Enabled = false;
         }
-
         private void removeBtn_Click(object sender, EventArgs e)
         {
             //Replaces the existing inventory array with the updated inventory
-            inventoryItems = inventoryManager.remove(resultsLst.SelectedIndices[0]).ToArray();
+            inventoryItems = inventoryManager.remove(resultsLst.SelectedIndices[0]);
             //Repopulates the displayed inventory with correct information.
             showInventory(inventoryItems);
         }
-
-        private void confirmBtn_Click(object sender, EventArgs e)
+        
+        //Restocks existing items.
+        private void restockBtn_Click(object sender, EventArgs e)
         {
-            Inventory.inventoryStruct inventoryUpdate = new Inventory.inventoryStruct();
-            inventoryUpdate.title = addTitle.Text;
-            if (int.TryParse(addPrice.Text, out int price)) { inventoryUpdate.price = price; }
-            if (int.TryParse(addQuantity.Text, out int quantity)) { inventoryUpdate.quantity = quantity; }
-            if (int.TryParse(addPageCount.Text, out int pages)) { inventoryUpdate.pageCount = pages; }
-
-            string[] genere = new string[genereBox.SelectedItems.Count];
-            genereBox.SelectedItems.CopyTo(genere, 0);
-            inventoryUpdate.genere = genere;
-
-            if (confirmBtn.Text.Equals("Add Book"))
-            {
-               inventoryUpdate.productID = inventoryItems.Length;
-               //Replaces the existing inventory array with the updated inventory
-               inventoryItems = inventoryManager.add(inventoryUpdate).ToArray();
-            }
-            else if(confirmBtn.Text.Equals("Edit Book")) 
-            {
-                inventoryUpdate.productID = int.Parse(resultsLst.SelectedItems[0].SubItems[5].Text);
-
-                Console.WriteLine("Test");
-                //Replaces the existing inventory array with the updated inventory
-                inventoryItems = inventoryManager.edit(inventoryUpdate).ToArray();
-            }
-            //Repopulates the displayed inventory with correct information.
-            showInventory(inventoryItems);
-
-            addBtn.Enabled = true;
-
-            //Resets input fields
-            addTitle.Text = "";
-            addQuantity.Text = "";
-            addPrice.Text = "";
-            addPageCount.Text = "";
-
-            showAddEdit(false);
-        }
-
-        private void addEditChanged(object sender, EventArgs e)
-        {
-            if(addTitle.Text != "" && addQuantity.Text != "" && addPrice.Text != "" && addPageCount.Text != "" && genereBox.SelectedIndices.Count > 0)
-            {
-                confirmBtn.Enabled = true;
-            }
-            else { 
-                confirmBtn.Enabled = false; 
-            }
+            //Initializes and displays the restock form
+            Restock restock = new Restock(this);
+            restock.ShowDialog();
+            
+            //Disables buttons that rely on an item to be selected.
+            editBtn.Enabled = false;
+            removeBtn.Enabled = false;
+            restockBtn.Enabled = false;
         }
     }
 }
