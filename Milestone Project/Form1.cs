@@ -45,6 +45,14 @@ namespace Milestone_Project
                 resultsLst.Items.Add(lvItem);
             }
         }
+
+        //Used for resetting search fields
+        public void resetSearch()
+        {
+            searchBy.SelectedIndex = -1;
+            searchTxt.Text = string.Empty;
+            searchCombo.SelectedIndex = -1;
+        }
         
 
         //If searchBy is Title it will show the text box if it is genre it will show a combo box
@@ -70,6 +78,8 @@ namespace Milestone_Project
         {
             UpdateInventory updateInventory = new UpdateInventory(this, "Add Book");
             updateInventory.Show();
+            //Resets search fields
+            resetSearch();
         }
         
 
@@ -102,7 +112,7 @@ namespace Milestone_Project
         //Displays form to update inventory.
         private void editBtn_Click(object sender, EventArgs e)
         {
-            string[] editArr = {resultsLst.SelectedItems[0].SubItems[0].Text,
+            string[] editArr = {resultsLst.SelectedItems[0].SubItems[0].Text, resultsLst.SelectedItems[0].SubItems[1].Text,
                 resultsLst.SelectedItems[0].SubItems[2].Text, resultsLst.SelectedItems[0].SubItems[3].Text, resultsLst.SelectedItems[0].SubItems[3].Text};
             UpdateInventory updateInventory = new UpdateInventory(this, "Edit Book", editArr);
 
@@ -116,9 +126,18 @@ namespace Milestone_Project
         private void removeBtn_Click(object sender, EventArgs e)
         {
             //Replaces the existing inventory array with the updated inventory
-            inventoryItems = inventoryManager.remove(resultsLst.SelectedIndices[0]);
+            inventoryItems = inventoryManager.remove(int.Parse(resultsLst.SelectedItems[0].SubItems[5].Text));
+            //Updates ProductIds
+            inventoryItems = inventoryManager.updateProductId(inventoryItems);
             //Repopulates the displayed inventory with correct information.
             showInventory(inventoryItems);
+            //Resets search fields
+            resetSearch();
+
+            //Disables buttons that rely on an item to be selected.
+            editBtn.Enabled = false;
+            removeBtn.Enabled = false;
+            restockBtn.Enabled = false;
         }
         
         //Restocks existing items.
@@ -127,11 +146,27 @@ namespace Milestone_Project
             //Initializes and displays the restock form
             Restock restock = new Restock(this);
             restock.ShowDialog();
-            
+            //Resets search fields
+            resetSearch();
+
             //Disables buttons that rely on an item to be selected.
             editBtn.Enabled = false;
             removeBtn.Enabled = false;
             restockBtn.Enabled = false;
+        }
+
+        private void addCSVBtn_Click(object sender, EventArgs e)
+        {
+            //Opens the file dialog.
+            upload.ShowDialog();
+            //Adds items retrieved from file selected through file dialog to the InventoryItems Array.
+            inventoryItems.AddRange(inventory.bulkUpload(upload.FileName, inventoryItems.Count - 1));
+            //Updates Inventory Manager
+            inventoryManager.initializeArray(inventoryItems);
+            //Displays the newly added items.
+            showInventory(inventoryItems);
+            //Resets search fields
+            resetSearch();
         }
     }
 }

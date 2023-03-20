@@ -27,9 +27,13 @@ namespace Milestone_Project
             InitializeComponent();
             confirmBtn.Text = confirmBtnText;
             addTitle.Text = currentValue[0];
-            addQuantity.Text = currentValue[1];
-            addPrice.Text = currentValue[2];
-            addPageCount.Text = currentValue[3];
+            foreach (string genre in currentValue[1].Split(',')) { 
+                int index = genreBox.Items.IndexOf(genre.Trim());
+                genreBox.SetSelected(index, true);
+            }
+            addQuantity.Text = currentValue[2];
+            addPrice.Text = currentValue[3];
+            addPageCount.Text = currentValue[4];
         }
 
         private void addEditChanged(object sender, EventArgs e)

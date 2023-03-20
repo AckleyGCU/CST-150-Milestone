@@ -116,5 +116,35 @@ namespace Milestone_Project
             return results;
         }
 
+        //Takes in a file path that the user selects from a file dialog
+        public ArrayList bulkUpload(string filePath, int lastId)
+        {
+            //Initializes the ArrayList and Id counter
+            var inventory = new ArrayList();
+            int idCounter = lastId;
+
+            //Will go through each line in the text file
+            foreach (string line in System.IO.File.ReadLines(filePath))
+            {
+                idCounter++;
+                //Turns each row into an array based off a comma
+                String[] rows = line.Split(',');
+
+                //Uses the array to define the struct and then add said struct to the Arraylist
+                inventoryStruct book = new inventoryStruct();
+                book.title = rows[0];
+                book.genre = rows[1].Split('-');
+                book.quantity = int.Parse(rows[2]);
+                book.price = int.Parse(rows[3]);
+                book.pageCount = int.Parse(rows[4]);
+                book.productID = idCounter;
+
+                inventory.Add(book);
+            }
+
+            //Returns the struct ArrayList
+            return inventory;
+        }
+
     }
 }

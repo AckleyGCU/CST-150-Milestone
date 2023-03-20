@@ -46,6 +46,8 @@
             this.productID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.outOfStockChk = new System.Windows.Forms.CheckBox();
             this.restockBtn = new System.Windows.Forms.Button();
+            this.addCSVBtn = new System.Windows.Forms.Button();
+            this.upload = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // label2
@@ -219,11 +221,26 @@
             this.restockBtn.UseVisualStyleBackColor = true;
             this.restockBtn.Click += new System.EventHandler(this.restockBtn_Click);
             // 
+            // addCSVBtn
+            // 
+            this.addCSVBtn.Location = new System.Drawing.Point(603, 15);
+            this.addCSVBtn.Name = "addCSVBtn";
+            this.addCSVBtn.Size = new System.Drawing.Size(121, 53);
+            this.addCSVBtn.TabIndex = 42;
+            this.addCSVBtn.Text = "Add Via CSV";
+            this.addCSVBtn.UseVisualStyleBackColor = true;
+            this.addCSVBtn.Click += new System.EventHandler(this.addCSVBtn_Click);
+            // 
+            // upload
+            // 
+            this.upload.FileName = "upload";
+            // 
             // BookStore
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(754, 450);
+            this.Controls.Add(this.addCSVBtn);
             this.Controls.Add(this.restockBtn);
             this.Controls.Add(this.outOfStockChk);
             this.Controls.Add(this.searchBtn);
@@ -262,6 +279,8 @@
         private System.Windows.Forms.ColumnHeader productID;
         private System.Windows.Forms.CheckBox outOfStockChk;
         private System.Windows.Forms.Button restockBtn;
+        private System.Windows.Forms.Button addCSVBtn;
+        private System.Windows.Forms.OpenFileDialog upload;
     }
 }
 
